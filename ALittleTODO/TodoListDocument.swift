@@ -1,5 +1,5 @@
 //
-//  Document.swift
+//  TodoListDocument.swift
 //  ALittleTODO
 //
 //  Created by Stephen Murphy on 6/12/19.
@@ -8,15 +8,18 @@
 
 import UIKit
 
-class Document: UIDocument {
+class TodoListDocument: UIDocument {
+    
+    var todoList: TodoList?
     
     override func contents(forType typeName: String) throws -> Any {
-        // Encode your document with an instance of NSData or NSFileWrapper
-        return Data()
+        return todoList?.json ?? Data()
     }
     
     override func load(fromContents contents: Any, ofType typeName: String?) throws {
-        // Load your document from contents
+        if let json = contents as? Data {
+            todoList = TodoList(json: json)
+        }
     }
 }
 

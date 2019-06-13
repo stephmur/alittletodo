@@ -1,0 +1,20 @@
+{
+  "todos": [
+    {
+      "complete":false,
+      "text":"Mow the lawn"
+    },
+    {
+      "complete":false,
+      "text":"Trim the hedge"
+    },
+    {
+      "complete":false,
+      "text":"Cook the goose"
+    },
+    {
+      "complete":true,
+      "text":"Tip the waitress"
+    }
+  ]
+}
