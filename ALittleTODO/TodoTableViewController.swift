@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodoTableViewController: UITableViewController {
+class TodoTableViewController: UITableViewController, DataEnteredDelegate {
 
     // MARK: - Model
     
@@ -24,12 +24,11 @@ class TodoTableViewController: UITableViewController {
             document?.updateChangeCount(.done)
         }
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.clearsSelectionOnViewWillAppear = false
-//        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -39,8 +38,6 @@ class TodoTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        print("number of rows in model: \(todoList?.todos.count ?? 0)")
         return todoList?.todos.count ?? 0
     }
 
@@ -49,7 +46,6 @@ class TodoTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.textLabel?.text = todoList?.todos[indexPath.row].text
-        print("Label \(indexPath.row)")
 
         return cell
     }
@@ -79,15 +75,21 @@ class TodoTableViewController: UITableViewController {
         return true
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let vc = segue.destination.contents as? AddItemViewController {
+            vc.delegate = self
+        }
     }
-    */
+    
+    func userDidEnterInformation(todoText: String) {
+        let endIndex = todoList?.todos.endIndex ?? 0
+        todoList?.todos.insert(Todo.TodoItem(complete: false, text: todoText), at: endIndex)
+        document?.todoList = todoList
+        document?.save(to: document!.fileURL, for: .forOverwriting, completionHandler: nil)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -104,14 +106,16 @@ class TodoTableViewController: UITableViewController {
                 }
                 
                 self.tableView.reloadData()
-                // Display the content of the document, e.g.:
-                print("Document: " + (self.document?.fileURL.lastPathComponent ?? "<unknown>"))
             } else {
                 // Make sure to handle the failed import appropriately, e.g., by presenting an error message to the user.
             }
         })
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        document?.close()
+    }
+
     @IBAction func dismissTodoDocumentViewController(_ sender: UIBarButtonItem) {
         dismiss(animated: true) {
             self.document?.close(completionHandler: nil)
