@@ -64,12 +64,14 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     func presentDocument(at documentURL: URL) {
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let documentVC = storyBoard.instantiateViewController(withIdentifier: "DocumentMVC") as! TodoListViewController
-        if let todoListViewController = documentVC.contents as? TodoListViewController {
-            todoListViewController.document = TodoListDocument(fileURL: documentURL)
+        let tableViewNavController = storyBoard.instantiateViewController(withIdentifier: "TodoTableViewNavController") as! UINavigationController
+//        let documentVC = tableViewNavController.visibleViewController
+//        let documentVC = storyBoard.instantiateViewController(withIdentifier: "DocumentMVC") as! TodoTableViewController
+        if let todoListViewController = tableViewNavController.visibleViewController as? TodoTableViewController {
+            todoListViewController.document = TodoDocument(fileURL: documentURL)
         }
         
-        present(documentVC, animated: true, completion: nil)
+        present(tableViewNavController, animated: true, completion: nil)
     }
 }
 

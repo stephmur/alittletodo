@@ -8,18 +8,18 @@
 
 import UIKit
 
-class TodoListViewController: UIViewController
+class TodoViewController: UIViewController
 {
     
     // MARK: - Model
     
-    var todoList: TodoList?
+    var todoList: Todo?
     
     // MARK: - Storyboard
     
     @IBOutlet weak var documentNameLabel: UILabel!
     
-    var document: TodoListDocument?
+    var document: TodoDocument?
     
     func documentChanged() {
         document?.todoList = todoList

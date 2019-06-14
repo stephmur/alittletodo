@@ -8,9 +8,9 @@
 
 import UIKit
 
-class TodoListDocument: UIDocument {
+class TodoDocument: UIDocument {
     
-    var todoList: TodoList?
+    var todoList: Todo?
     
     override func contents(forType typeName: String) throws -> Any {
         return todoList?.json ?? Data()
@@ -18,7 +18,7 @@ class TodoListDocument: UIDocument {
     
     override func load(fromContents contents: Any, ofType typeName: String?) throws {
         if let json = contents as? Data {
-            todoList = TodoList(json: json)
+            todoList = Todo(json: json)
         }
     }
 }

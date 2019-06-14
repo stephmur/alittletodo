@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TodoList: Codable
+struct Todo: Codable
 {
     var todos = [TodoItem]()
     
@@ -19,7 +19,7 @@ struct TodoList: Codable
     
     init?(json: Data) // try to init a TodoList from some JSON
     {
-        if let newValue = try? JSONDecoder().decode(TodoList.self, from: json) {
+        if let newValue = try? JSONDecoder().decode(Todo.self, from: json) {
             self = newValue
         } else {
             return nil
