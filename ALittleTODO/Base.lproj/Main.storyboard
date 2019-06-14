@@ -117,6 +117,7 @@
                                 <action selector="dismissTodoDocumentViewController:" destination="Sai-6Z-ePL" id="L8W-zE-n12"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="FGG-om-kT2"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="faO-dr-xuo" userLabel="First Responder" sceneMemberID="firstResponder"/>
